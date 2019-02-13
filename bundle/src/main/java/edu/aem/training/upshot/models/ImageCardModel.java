@@ -15,12 +15,7 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import com.day.cq.wcm.foundation.Image;
-import com.day.cq.wcm.api.components.DropTarget;
 import com.day.cq.wcm.foundation.Placeholder;
-import com.day.cq.commons.Doctype;
-
-import java.io.IOException;
-import java.io.StringWriter;
 
 @Model(
         adaptables = SlingHttpServletRequest.class,
@@ -56,12 +51,6 @@ public class ImageCardModel {
         Image image = new Image(resource);
         image.setSelector(".img"); // use image script
         image.setIsInUITouchMode(Placeholder.isAuthoringUIModeTouch(request));
-        //drop target css class = dd prefix + name of the drop target in the edit config
-        image.addCssClass(DropTarget.CSS_CLASS_PREFIX + "image");
-        image.setDoctype(Doctype.fromRequest(request));
-        final Designer designer = request.getResourceResolver().adaptTo(Designer.class);
-        Style currentStyle = designer.getStyle(resource);
-        image.loadStyleData(currentStyle);
 
         return image.getSrc();
     }

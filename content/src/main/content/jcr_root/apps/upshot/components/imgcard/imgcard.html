@@ -1,4 +1,40 @@
-<sly data-sly-use.model="edu.aem.training.upshot.models.ImageCardModel">
-    <p>${model.imgSrc}</p>
-    <div><img src='${model.imgSrc}'/></div>
-</sly>
+<sly data-sly-use.clientlib="/libs/granite/sightly/templates/clientlib.html" />
+<sly data-sly-call="${clientlib.css @ categories='upshot.components'}" />
+
+
+<div class="table">
+    <div class="row">
+        <div class="cell">
+            <sly data-sly-use.model="edu.aem.training.upshot.models.ImageCardModel">
+                <img src='${model.imgSrc}'/>
+            </sly>
+        </div>
+        <div class="cell card-info">
+            <div class="table">
+                <sly data-sly-test="${properties.header}">
+                    <div class="row">
+                        <div class="cell">
+                            <h1>${properties.header}</h1>
+                        </div>
+                    </div>
+                </sly>
+                <sly data-sly-test="${properties.richtext}">
+                    <div class="row">
+                        <div class="cell">
+                            <h1>${properties.richtext  @ context='html'}</h1>
+                        </div>
+                    </div>
+                </sly>
+                <sly data-sly-test="${properties.link}">
+                    <div class="row">
+                        <div class="cell">
+                            <a href="${properties.link}.html" target="${properties.target}">
+                                ${properties.link}.html
+                            </a>
+                        </div>
+                    </div>
+                </sly>
+            </div>
+        </div>
+    </div>
+</div>

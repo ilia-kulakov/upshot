@@ -1,16 +1,21 @@
-.grid {
+.table {
     display: table;
     border: 1px solid #eee;
     width: 100%;
 }
 
-.grid .row {
+.table .row {
     display: table-row;
 }
 
-.grid .row .cell {
+.table .row .cell {
     display: table-cell;
     border: 1px solid #eee;
     padding: 3px;
     margin: 0;
+}
+
+.card-info {
+    width:100%;
+    vertical-align: top;
 }
