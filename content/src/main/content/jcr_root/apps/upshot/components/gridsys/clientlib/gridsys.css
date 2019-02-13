@@ -1,0 +1,16 @@
+.grid {
+    display: table;
+    border: 1px solid #999999;
+    width: 100%;
+}
+
+.grid .row {
+    display: table-row;
+}
+
+.grid .row .cell {
+    display: table-cell;
+    border: 1px solid #999999;
+    padding: 3px;
+    margin: 0;
+}

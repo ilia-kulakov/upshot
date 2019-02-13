@@ -24,9 +24,9 @@ import java.util.regex.Pattern;
 @Model(
         adaptables = SlingHttpServletRequest.class,
         defaultInjectionStrategy = DefaultInjectionStrategy.OPTIONAL)
-public class GridInfo {
+public class GridModel {
 
-    Logger logger = LoggerFactory.getLogger(GridInfo.class);
+    Logger logger = LoggerFactory.getLogger(GridModel.class);
 
     @Self
     SlingHttpServletRequest request;
@@ -69,6 +69,7 @@ public class GridInfo {
     }
 
     private void checkNodes() {
+        // Remove redundant nodes
         logger.info("--> checkNodes -->");
 
         Resource res = request.getResource();
@@ -91,6 +92,7 @@ public class GridInfo {
                 String name = node.getName();
                 logger.info("Name: " + name);
 
+                // Extract indexes of grid cell
                 // par_r1c1
                 Pattern pattern = Pattern.compile("^par_r(\\d+)c(\\d+)$");
                 Matcher matcher = pattern.matcher(name);

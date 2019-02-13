@@ -1,22 +1,7 @@
-<style type="text/css">
-    .grid {
-        display: table;
-        border: 1px solid #999999;
-        width: 100%;
-    }
+<sly data-sly-use.clientlib="/libs/granite/sightly/templates/clientlib.html" />
+<sly data-sly-call="${clientlib.css @ categories='upshot.components'}" />
 
-    .grid .row {
-        display: table-row;
-    }
-
-    .grid .row .cell {
-        display: table-cell;
-        border: 1px solid #999999;
-        padding: 3px;
-        margin: 0;
-    }
-</style>
-<sly data-sly-use.gridInfo="edu.aem.training.upshot.models.GridInfo">
+<sly data-sly-use.gridInfo="edu.aem.training.upshot.models.GridModel">
     <div class="grid" data-sly-list.row="${gridInfo.rows}">
         <div class="row" data-sly-list.col="${gridInfo.cols}">
             <sly data-sly-test.parResource="${ 'par_r{0}c{1}' @ format=[row, col]}"/>
