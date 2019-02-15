@@ -1,18 +1,19 @@
-.table {
+.imgcard-table {
     display: table;
     border: 1px solid #eee;
     width: 100%;
 }
 
-.table .row {
+.imgcard-table .row {
     display: table-row;
 }
 
-.table .row .cell {
+.imgcard-table .row .cell {
     display: table-cell;
     border: 1px solid #eee;
     padding: 3px;
     margin: 0;
+    width: content-min;
 }
 
 .card-info {
