@@ -1,0 +1,8 @@
+<sly data-sly-use.breadcrumb="edu.aem.training.upshot.models.BreadcrumbModel">
+    <sly data-sly-list ="${breadcrumb.links}">
+        <strong>
+            <a href="${item.url}">${item.title}</a>
+            <sly data-sly-test="${!itemList.last}">&nbsp;&gt;&nbsp;</sly>
+        </strong>
+    </sly>
+</sly>

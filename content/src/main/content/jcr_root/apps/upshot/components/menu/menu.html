@@ -1,3 +1,8 @@
 <ul data-sly-list="${currentPage.listChildren}">
-    <li><a href="${item.path}.html">${item.title}</a></li>
+    <li>
+        <a href="${item.path}.html">
+            <sly data-sly-test="${item.navigationTitle}">${item.navigationTitle}</sly>
+            <sly data-sly-test="${!item.navigationTitle}">${item.title}</sly>
+        </a>
+    </li>
 </ul>
