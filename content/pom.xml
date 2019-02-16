@@ -25,6 +25,13 @@
             <artifactId>upshot-bundle</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.adobe.acs</groupId>
+            <artifactId>acs-aem-commons-content</artifactId>
+            <version>2.14.0</version>
+            <type>content-package</type>
+            <classifier>min</classifier> <!-- optional, see below -->
+        </dependency>
     </dependencies>
     <build>
         <resources>
