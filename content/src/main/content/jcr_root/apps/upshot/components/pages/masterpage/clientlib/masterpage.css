@@ -77,16 +77,10 @@ footer {
     padding-right:30px;
     margin:20px;
     border: 1px solid #ddd;
-    width: max-content;
 }
 
 .padding20 {
     padding-left:20px !important;
     padding-right:20px !important;
-}
-
-.breadcrumb {
-    text-align: left;
-    padding-left:20px;
 }
 
