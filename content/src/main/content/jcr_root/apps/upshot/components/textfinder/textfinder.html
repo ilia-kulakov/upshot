@@ -6,9 +6,7 @@
     <div>
         <input id="searchText" name="Search Text" type="text" value="">
         <input type="button" value="Submit"  name="textfinder-submit" id="textfinder-submit" value="Submit">
-        <sly data-sly-use.info="pageInfo.js">
-            <input hidden id="currentPage" name="Current Page" type="text" value="${info.path}">
-        </sly>
+        <input hidden id="currentPage" name="Current Page" type="text" value="${currentPage.path}">
     </div>
     <div id="json">
     </div>

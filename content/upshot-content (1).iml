@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="4">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_5">
+    <output url="file://$MODULE_DIR$/target/classes" />
+    <output-test url="file://$MODULE_DIR$/target/test-classes" />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src/main/content/jcr_root" type="java-resource" />
+      <excludeFolder url="file://$MODULE_DIR$/target" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="upshot-bundle" />
+    <orderEntry type="library" name="Maven: com.adobe.acs:acs-aem-commons-bundle:2.14.0" level="project" />
+    <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.5" level="project" />
+    <orderEntry type="library" name="Maven: com.adobe.acs:acs-aem-commons-bundle-twitter:2.14.0" level="project" />
+    <orderEntry type="library" name="Maven: commons-collections:commons-collections:3.2.1" level="project" />
+    <orderEntry type="module-library">
+      <library name="jahia-plugin-base-cnd-files">
+        <CLASSES>
+          <root url="jar://$APPLICATION_PLUGINS_DIR$/.IntelliJ_Jahia_Plugin/jahia/jahia-plugin-cnds.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jahia-plugin-completion-library">
+        <CLASSES>
+          <root url="jar://$APPLICATION_PLUGINS_DIR$/.IntelliJ_Jahia_Plugin/jahia/jahia-plugin-completion-library.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$APPLICATION_PLUGINS_DIR$/.IntelliJ_Jahia_Plugin/jahia/jahia-plugin-completion-library-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+  </component>
+</module>
