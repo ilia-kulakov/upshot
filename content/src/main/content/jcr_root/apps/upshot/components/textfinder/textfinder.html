@@ -2,37 +2,14 @@
 <sly data-sly-call="${clientlib.css @ categories='upshot.components.textfinder'}" />
 <sly data-sly-call="${clientlib.js @ categories='upshot.components.textfinder'}" />
 
-
-
 <form method="#" align="left">
-
-    <div>
-        <label for="claimNum" id="claimNumLabel" >Claim Number</label>
-    </div>
-    <div>
-        <input id="claimNum" name="Claim Number" readonly=true type="text" value="">
-    </div>
-
-    <div>
-        <label for="searchText" id="searchTextLabel" >Search Text</label>
-    </div>
     <div>
         <input id="searchText" name="Search Text" type="text" value="">
-    </div>
-
-    <div>
-        <label for="currentPage" id="currentPageLabel">Current Page</label>
-    </div>
-    <div>
-        <input id="currentPage" name="Current Page" type="text" value="">
-    </div>
-
-    <div>
-        <textarea id="json" rows="4" cols="50">
-        </textarea>
-    </div>
-
-    <div>
         <input type="button" value="Submit"  name="textfinder-submit" id="textfinder-submit" value="Submit">
+        <sly data-sly-use.info="pageInfo.js">
+            <input hidden id="currentPage" name="Current Page" type="text" value="${info.path}">
+        </sly>
+    </div>
+    <div id="json">
     </div>
 </form>

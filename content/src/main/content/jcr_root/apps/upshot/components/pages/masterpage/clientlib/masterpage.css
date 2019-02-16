@@ -22,7 +22,11 @@ body:before {
 
 header {
     background: #bfbcbcf5;
-    padding-top: 1px;
+    padding: 20px;
+}
+
+.content{
+    padding:20px;
 }
 
 .table {
