@@ -74,6 +74,14 @@
             <version>1.1.0</version>
             <scope>provided</scope>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+
     </dependencies>
 
     <!-- ====================================================================== -->
@@ -102,6 +110,8 @@
                         <Bundle-SymbolicName>edu.aem.training.upshot-bundle</Bundle-SymbolicName>
                         <Sling-Model-Packages>edu.aem.training.upshot.models</Sling-Model-Packages>
                         <Import-Package>javax.inject;version=0.0.0,*</Import-Package>
+                        <Import-Package>com.day.cq.search;version=0.0.0,*</Import-Package>
+
                     </instructions>
                 </configuration>
             </plugin>
