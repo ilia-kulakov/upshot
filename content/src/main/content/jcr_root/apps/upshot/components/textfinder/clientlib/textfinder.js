@@ -24,24 +24,28 @@ $(document).ready(function() {
        };
 
         //Get the user-defined values
-        var searchText= $('#searchText').val() ;
-        var currentPage= $('#currentPage').val();
+        var searchText= $('#searchText').val();
+        var searchPath= $('#searchPath').val();
+        var queryEngine= $('#queryEngine').val();
         var claimId = createUUID();
 
         //Use JQuery AJAX request to post data to a Sling Servlet
         $.ajax({
              type: 'GET',
              url:'/bin/upshot/servlets/TextFinderServlet',
-             data:'id=' + claimId + '&searchText=' + searchText + '&currentPage=' + currentPage,
+             data:'id=' + claimId + '&searchText=' + searchText + '&searchPath=' + searchPath + '&queryEngine=' + queryEngine,
              success: function(msg){
 
                 var json = jQuery.parseJSON(msg);
                 var msgId=   json.id;
-                var searchText = json.searchText;
-                var currentPage = json.currentPage;
+                var links = json.links;
 
                 // $('#claimNum').val(msgId);
-                $('#json').html("Filed by " + searchText + " " + currentPage);
+                var list = "";
+                for(var i = 0; i < links.length; i++) {
+                    list += links[i].title + "&nbsp;" + links[i].url + "<br>";
+                }
+                $('#json').html(list);
              }
          });
       });

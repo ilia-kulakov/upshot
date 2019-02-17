@@ -12,10 +12,5 @@
         <module name="upshot-content (1)" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="upshot" target="1.5" />
-      <module name="upshot-bundle" target="1.5" />
-      <module name="upshot-content (1)" target="1.5" />
-    </bytecodeTargetLevel>
   </component>
 </project>

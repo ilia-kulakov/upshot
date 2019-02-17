@@ -6,7 +6,8 @@
     <div>
         <input id="searchText" name="Search Text" type="text" value="">
         <input type="button" value="Submit"  name="textfinder-submit" id="textfinder-submit" value="Submit">
-        <input hidden id="currentPage" name="Current Page" type="text" value="${currentPage.path}">
+        <input hidden id="searchPath" type="text" value="${currentPage.path}">
+        <input hidden id="queryEngine" type="text" value="${properties['queryEngine']}">
     </div>
     <div id="json">
     </div>

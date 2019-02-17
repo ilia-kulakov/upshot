@@ -9,52 +9,31 @@
         <items jcr:primaryType="cq:WidgetCollection">
             <tab1
                     jcr:primaryType="cq:Panel"
-                    title="General Senior">
+                    title="General">
                 <items jcr:primaryType="cq:WidgetCollection">
-                    <find-what-list
+                    <query-engine
                             jcr:primaryType="cq:Widget"
-                            devlist="Click '+' to add a new &quot;Find what&quot; field"
-                            fieldLabel="Find what list"
-                            name="./findWhatList"
-                            xtype="multifield">
-                        <find-what
-                                jcr:primaryType="cq:Widget"
-                                fieldDescription="Please fill find what"
-                                fieldLabel="Find what"
-                                xtype="textfield"/>
-                    </find-what-list>
-                    <find-where-list
-                            jcr:primaryType="cq:Widget"
-                            devlist="Click '+' to add a new &quot;Find where&quot; field"
-                            fieldLabel="Find where list"
-                            name="./findWhereList"
-                            xtype="multifield">
-                        <find-where
-                                jcr:primaryType="cq:Widget"
-                                fieldDescription="Please fill resource path"
-                                fieldLabel="Find where"
-                                name="./findWhere"
-                                rootPath="/"
-                                xtype="pathfield"/>
-                    </find-where-list>
-                    <query-api
-                            jcr:primaryType="cq:Widget"
-                            fieldDescription="Please select query API"
-                            fieldLabel="Query API"
-                            name="./queryApi"
+                            activeItem="1"
+                            fieldDescription="Please select query engine"
+                            fieldLabel="Query engine"
+                            name="./queryEngine"
                             type="select"
                             xtype="selection">
                         <options jcr:primaryType="cq:WidgetCollection">
-                            <query-manager
+                            <xpath
                                     jcr:primaryType="nt:unstructured"
-                                    text="Query Manager"
-                                    value="Query Manager"/>
-                            <query-builder
+                                    text="XPath"
+                                    value="xpath"/>
+                            <sql2
                                     jcr:primaryType="nt:unstructured"
-                                    text="Query Builder"
-                                    value="Query Builder"/>
+                                    text="SQL2"
+                                    value="sql2"/>
+                            <predicates
+                                    jcr:primaryType="nt:unstructured"
+                                    text="Predicates"
+                                    value="predicates"/>
                         </options>
-                    </query-api>
+                    </query-engine>
                 </items>
             </tab1>
         </items>
