@@ -43,9 +43,12 @@ $(document).ready(function() {
                 // $('#claimNum').val(msgId);
                 var list = "";
                 for(var i = 0; i < links.length; i++) {
-                    list += links[i].title + "&nbsp;" + links[i].url + "<br>";
+                    list += "<li><strong>" + links[i].title + "</strong><br><a href='" + links[i].url + "'>" + links[i].url + "</a></li>";
                 }
-                $('#json').html(list);
+                if(list.length > 0) {
+                    list = "<ul>" + list + "</ul>";
+                }
+                $('#json').html($('#queryEngine').val() + ":<br>" + list);
              }
          });
       });

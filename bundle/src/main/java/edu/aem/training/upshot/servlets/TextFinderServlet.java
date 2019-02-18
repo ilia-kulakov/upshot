@@ -5,6 +5,7 @@ import com.day.cq.search.Query;
 import com.day.cq.search.QueryBuilder;
 import com.day.cq.search.result.Hit;
 import com.day.cq.search.result.SearchResult;
+import com.day.cq.wcm.api.PageManager;
 import edu.aem.training.upshot.beans.LinkBean;
 import org.apache.felix.scr.annotations.Reference;
 import org.apache.felix.scr.annotations.sling.SlingServlet;
@@ -20,6 +21,8 @@ import org.apache.sling.jcr.api.SlingRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.jcr.Node;
+import javax.jcr.NodeIterator;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 import javax.jcr.query.QueryManager;
@@ -47,11 +50,23 @@ public class TextFinderServlet extends SlingSafeMethodsServlet {
 
     protected void doGet(SlingHttpServletRequest request, SlingHttpServletResponse response) throws ServletException, IOException {
 
+        logger.info("Start searching");
+
         // Get the submitted form data
         String id = UUID.randomUUID().toString();
+        //request.setCharacterEncoding("UTF-8");
+
         String searchPath = request.getParameter("searchPath");
         String searchText = request.getParameter("searchText");
         String queryEngine = request.getParameter("queryEngine");
+
+        logger.info("Char Encoding: " + request.getCharacterEncoding());
+
+        logger.info("searchPath: " + searchPath);
+        logger.info("searchText: " + searchText);
+        logger.info("queryEngine: " + queryEngine);
+
+
 
         List<LinkBean> links = find(searchText, searchPath, queryEngine);
 
@@ -96,23 +111,23 @@ public class TextFinderServlet extends SlingSafeMethodsServlet {
     }
 
     private List<LinkBean> findBySql2(String searchText, String searchPath) {
-
-        //Setup the query based on user input
+        // Setup the query based on user input
+        // Search fulltext in current page and sub-paths
         String statement =   "SELECT * FROM [cq:Page] AS page " +
-                "WHERE ISDESCENDANTNODE([" + searchPath + "]) AND " +
+                "WHERE ([jcr:path] = '" + searchPath + "' OR ISDESCENDANTNODE([" + searchPath + "])) AND " +
                 "CONTAINS(page.*, '" + searchText + "')";
 
         return findByQueryManager(statement, javax.jcr.query.Query.JCR_SQL2);
     }
 
     private List<LinkBean> findByXpath(String searchText, String searchPath) {
-
-        //Setup the query based on user input
+        // Search fulltext in current page and sub-paths
         String statement =
-                "/jcr:root" + searchPath + "//element(*, cq:Page) " +
+                "/jcr:root" + searchPath + "//element(*, cq:PageContent) " +
                 "[jcr:contains(., '" + searchText + "' )]";
+        List<LinkBean> links = findByQueryManager(statement, javax.jcr.query.Query.XPATH);
 
-        return findByQueryManager(statement, javax.jcr.query.Query.XPATH);
+        return links;
     }
 
     private List<LinkBean> findByQueryManager(String statement, String engine) {
@@ -142,14 +157,17 @@ public class TextFinderServlet extends SlingSafeMethodsServlet {
             javax.jcr.query.QueryResult result = query.execute();
 
             //Iterate over the nodes in the results ...
-            javax.jcr.NodeIterator nodeIter = result.getNodes();
+            NodeIterator nodeIter = result.getNodes();
 
             logger.info("Did we get the result");
 
+            //create a page manager instance
+            PageManager pageManager = resourceResolver.adaptTo(PageManager.class);
+
             while ( nodeIter.hasNext() ) {
 
-                javax.jcr.Node pageNode = nodeIter.nextNode();
-                LinkBean link = extractLink(pageNode);
+                Node node = nodeIter.nextNode();
+                LinkBean link = extractLink(node);
                 resultList.add(link);
             }
 
@@ -160,11 +178,12 @@ public class TextFinderServlet extends SlingSafeMethodsServlet {
             this.logger.info("Something went wrong with session .. {}", e);
         }
 
-        return resultList;//.toArray(new LinkBean[] {});
+        return resultList;
     }
 
     private List<LinkBean> findByPredicates(String searchText, String searchPath) {
 
+        // Search fulltext in current page and sub-paths
         logger.info("*** Find By Query Builder ***");
 
         List<LinkBean> resultList = new ArrayList();
@@ -182,6 +201,7 @@ public class TextFinderServlet extends SlingSafeMethodsServlet {
             map.put("fulltext", searchText);
             map.put("type", "cq:Page");
             map.put("path", searchPath);
+            map.put("path.self", "true");
 
             logger.info("Created map:");
             for(String key : map.keySet()) {
@@ -209,16 +229,27 @@ public class TextFinderServlet extends SlingSafeMethodsServlet {
             this.logger.info("Something went wrong with session .. {}", e);
         }
 
-        return resultList;//.toArray(new LinkBean[]{});
+        return resultList;
     }
 
-    private LinkBean extractLink(javax.jcr.Node pageNode) {
+    private LinkBean extractLink(Node node) {
 
+        // Node may be Page or PageContent
         LinkBean link = null;
         try {
-            logger.info(pageNode.getPath());
+            logger.info(node.getPath());
 
-            javax.jcr.Node contentNode = pageNode.getNode("jcr:content");
+            Node pageNode;
+            Node contentNode;
+
+            if(node.getPrimaryNodeType().toString().equals("cq:PageContent")) {
+                contentNode = node;
+                pageNode = contentNode.getParent();
+            } else {
+                pageNode = node;
+                contentNode = pageNode.getNode("jcr:content");
+            }
+
             String title;
             if (contentNode.hasProperty("navTitle")) {
                 title = contentNode.getProperty("navTitle").getString();
