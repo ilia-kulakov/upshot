@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+          jcr:primaryType="nt:unstructured"
+          jcr:title="Image"
+          sling:resourceType="cq/gui/components/authoring/dialog"
+          helpPath="http://www.adobe.com/go/aem6_1_docs_component_en#Image - Sightly">
+    <content
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="granite/ui/components/foundation/container">
+        <layout
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="granite/ui/components/foundation/layouts/tabs"
+                type="nav"/>
+        <items jcr:primaryType="nt:unstructured">
+            <general
+                jcr:primaryType="nt:unstructured"
+                jcr:title="General"
+                sling:resourceType="granite/ui/components/foundation/section">
+                <layout
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/foundation/layouts/fixedcolumns"
+                    margin="{Boolean}false"/>
+                <items jcr:primaryType="nt:unstructured">
+                    <column
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="granite/ui/components/foundation/container">
+                        <items jcr:primaryType="nt:unstructured">
+                            <title
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/foundation/form/textfield"
+                                    fieldLabel="Title"
+                                    allowBlank="false"
+                                    name="./title"/>
+                            <description
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/foundation/form/textfield"
+                                    fieldLabel="Description"
+                                    name="./description"/>
+                            <date
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/foundation/form/datepicker"
+                                    fieldLabel="Date"
+                                    allowBlank="false"
+                                    name="./date"/>
+                            <place
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/foundation/form/textfield"
+                                    fieldLabel="Place"
+                                    name="./place"/>
+                            <topic
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/foundation/form/select"
+                                    fieldLabel="Topic"
+                                    fieldDescription="Please select topic"
+                                    activeItem="1"
+                                    name="./topic">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <meeting
+                                            jcr:primaryType="nt:unstructured"
+                                            text="Meeting"
+                                            value="meeting"/>
+                                    <planning
+                                            jcr:primaryType="nt:unstructured"
+                                            text="Planning"
+                                            value="planning"/>
+                                    <fighting
+                                            jcr:primaryType="nt:unstructured"
+                                            text="Fighting"
+                                            value="fighting"/>
+                                </items>
+                            </topic>
+                        </items>
+                    </column>
+                </items>
+            </general>
+        </items>
+    </content>
+</jcr:root>

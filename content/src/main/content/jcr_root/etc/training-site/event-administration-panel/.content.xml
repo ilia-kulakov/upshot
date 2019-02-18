@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="cq:Page">
+    <jcr:content
+        cq:lastModified="{Date}2019-02-18T16:36:08.423+03:00"
+        cq:lastModifiedBy="admin"
+        cq:template="/apps/upshot/templates/event-admin-upshot-template"
+        jcr:primaryType="cq:PageContent"
+        jcr:title="Event Administration Panel"
+        sling:resourceType="upshot/components/pages/event-admin-page">
+        <par
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="foundation/components/parsys">
+            <businessevent
+                jcr:created="{Date}2019-02-18T16:35:11.395+03:00"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2019-02-18T16:36:08.385+03:00"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="upshot/components/businessevent"
+                date="{Date}2019-02-19T16:35:54.000+03:00"
+                description="Event ! Description"
+                place="dep 12"
+                title="Event 1"
+                topic="planning"/>
+        </par>
+    </jcr:content>
+</jcr:root>

@@ -54,7 +54,7 @@ public class TextFinderServlet extends SlingSafeMethodsServlet {
 
         // Get the submitted form data
         String id = UUID.randomUUID().toString();
-        //request.setCharacterEncoding("UTF-8");
+        //request.setCharacterEncoding("UTF-8"); // Instead this configure Apache Sling Request Parameter Handling
 
         String searchPath = request.getParameter("searchPath");
         String searchText = request.getParameter("searchText");

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+          jcr:primaryType="cq:Dialog"
+          title="PDF Text Finder Component"
+          xtype="dialog">
+    <items
+            jcr:primaryType="cq:Widget"
+            xtype="tabpanel">
+        <items jcr:primaryType="cq:WidgetCollection">
+            <tab1
+                    jcr:primaryType="cq:Panel"
+                    title="General">
+                <items jcr:primaryType="cq:WidgetCollection">
+                    <title
+                            jcr:primaryType="cq:Widget"
+                            fieldLabel="Title"
+                            name="./title"
+                            allowBlank="false"
+                            xtype="textfield"/>
+                    <description
+                            jcr:primaryType="cq:Widget"
+                            fieldLabel="Description"
+                            name="./description"
+                            xtype="textfield"/>
+                    <date
+                            jcr:primaryType="cq:Widget"
+                            fieldLabel="Date"
+                            name="./date"
+                            hideTime="{Boolean}true"
+                            allowBlank="false"
+                            xtype="datetime"/>
+                    <place
+                            jcr:primaryType="cq:Widget"
+                            fieldLabel="Place"
+                            name="./place"
+                            xtype="textfield"/>
+
+                    <topic
+                            jcr:primaryType="cq:Widget"
+                            defaultValue="meeting"
+                            fieldDescription="Please select topic"
+                            fieldLabel="Topic"
+                            name="./topic"
+                            allowBlank="false"
+                            type="select"
+                            xtype="selection">
+                        <options jcr:primaryType="cq:WidgetCollection">
+                            <meeting
+                                    jcr:primaryType="nt:unstructured"
+                                    text="Meeting"
+                                    value="meeting"/>
+                            <planning
+                                    jcr:primaryType="nt:unstructured"
+                                    text="Planning"
+                                    value="planning"/>
+                            <fighting
+                                    jcr:primaryType="nt:unstructured"
+                                    text="Fighting"
+                                    value="fighting"/>
+                        </options>
+                    </topic>
+                </items>
+            </tab1>
+        </items>
+    </items>
+</jcr:root>

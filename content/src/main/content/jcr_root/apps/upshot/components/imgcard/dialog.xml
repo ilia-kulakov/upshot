@@ -45,7 +45,7 @@
                         rootPath="/content/training-site"
                         xtype="pathfield"/>
                 <target jcr:primaryType="cq:Widget"
-                           activeItem="1"
+                           defaultValue="_blank"
                            fieldLabel="Target"
                            fieldDescription="Please select where to open the link"
                            name="./target"
