@@ -4,10 +4,10 @@
     <jcr:content
         cq:lastModified="{Date}2019-02-18T16:36:08.423+03:00"
         cq:lastModifiedBy="admin"
-        cq:template="/apps/upshot/templates/event-admin-upshot-template"
+        cq:template="/apps/upshot/templates/event-control-panel-upshot-template"
         jcr:primaryType="cq:PageContent"
-        jcr:title="Event Administration Panel"
-        sling:resourceType="upshot/components/pages/event-admin-page">
+        jcr:title="Event Control Panel"
+        sling:resourceType="upshot/components/pages/event-control-panel-page">
         <par
             jcr:primaryType="nt:unstructured"
             sling:resourceType="foundation/components/parsys">

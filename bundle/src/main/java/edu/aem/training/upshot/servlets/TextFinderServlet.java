@@ -75,10 +75,7 @@ public class TextFinderServlet extends SlingSafeMethodsServlet {
             JSONArray jsonLinks = new JSONArray();
             for (LinkBean link : links)
             {
-                JSONObject obj = new JSONObject();
-                obj.put("title", link.getTitle());
-                obj.put("url", link.getUrl());
-                jsonLinks.put(obj);
+                jsonLinks.put(link.toJSONObject());
             }
 
             JSONObject json = new JSONObject();
