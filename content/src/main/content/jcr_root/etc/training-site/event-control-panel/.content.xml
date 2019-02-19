@@ -23,6 +23,90 @@
                 place="dep 12"
                 title="Event 1"
                 topic="planning"/>
+            <businessevent
+                    jcr:created="{Date}2019-02-18T16:35:11.395+03:00"
+                    jcr:createdBy="admin"
+                    jcr:lastModified="{Date}2019-02-18T16:36:08.385+03:00"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="upshot/components/businessevent"
+                    date="{Date}2019-02-19T16:35:54.000+03:00"
+                    description="Event ! Description"
+                    place="New York"
+                    title="Event 1"
+                    topic="planning"/>
+            <businessevent_1
+                    jcr:created="{Date}2019-02-18T16:35:11.395+03:00"
+                    jcr:createdBy="admin"
+                    jcr:lastModified="{Date}2019-02-18T16:36:08.385+03:00"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="upshot/components/businessevent"
+                    date="{Date}2018-02-23T16:35:54.000+03:00"
+                    description="Event ! Description"
+                    place="Moscow"
+                    title="Meet"
+                    topic="meeting"/>
+            <businessevent_2
+                    jcr:created="{Date}2018-01-18T16:35:11.395+03:00"
+                    jcr:createdBy="admin"
+                    jcr:lastModified="{Date}2019-02-18T16:36:08.385+03:00"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="upshot/components/businessevent"
+                    date="{Date}2019-06-16T16:35:54.000+03:00"
+                    description="Event ! Description"
+                    place="London"
+                    title="Plan"
+                    topic="planning"/>
+            <businessevent_3
+                    jcr:created="{Date}2019-02-18T16:35:11.395+03:00"
+                    jcr:createdBy="admin"
+                    jcr:lastModified="{Date}2019-02-18T16:36:08.385+03:00"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="upshot/components/businessevent"
+                    date="{Date}2015-05-10T16:35:54.000+03:00"
+                    description="Event ! Description"
+                    place="St. Petersburg"
+                    title="Fight"
+                    topic="fighting"/>
+            <businessevent_4
+                    jcr:created="{Date}2019-02-18T16:35:11.395+03:00"
+                    jcr:createdBy="admin"
+                    jcr:lastModified="{Date}2019-02-18T16:36:08.385+03:00"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="upshot/components/businessevent"
+                    date="{Date}2019-08-12T16:35:54.000+03:00"
+                    description="Event ! Description"
+                    place="Los Angeles"
+                    title="Meet"
+                    topic="meeting"/>
+            <businessevent_5
+                    jcr:created="{Date}2018-01-18T16:35:11.395+03:00"
+                    jcr:createdBy="admin"
+                    jcr:lastModified="{Date}2019-02-18T16:36:08.385+03:00"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="upshot/components/businessevent"
+                    date="{Date}2019-06-11T16:35:54.000+03:00"
+                    description="Event ! Description"
+                    place="Vladivostok"
+                    title="Speech"
+                    topic="meeting"/>
+            <businessevent_6
+                    jcr:created="{Date}2018-01-18T16:35:11.395+03:00"
+                    jcr:createdBy="admin"
+                    jcr:lastModified="{Date}2019-02-18T16:36:08.385+03:00"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="upshot/components/businessevent"
+                    date="{Date}2019-03-08T16:35:54.000+03:00"
+                    description="Event ! Description"
+                    place="Minsk"
+                    title="Dance"
+                    topic="meeting"/>
         </par>
     </jcr:content>
 </jcr:root>

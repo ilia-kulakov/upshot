@@ -37,7 +37,7 @@ public class BusinessEventServiceImpl implements BusinessEventService {
     public static final String PN_DEFAULT_EVENT_CONTROL_PANEL_URL = "aem.training.upshot.business_event.default_event_control_panel_url";
 
     public static final String DEFAULT_SORT_FIELD = "Title";
-    public static final String DEFAULT_SORT_ORDER = "ASC";
+    public static final String DEFAULT_SORT_ORDER = "asc";
     public static final int DEFAULT_PAGE_SIZE = 10;
     public static final String DEFAULT_EVENT_CONTROL_PANEL_URL ="/etc/training-site/event-control-panel";
 
@@ -53,8 +53,8 @@ public class BusinessEventServiceImpl implements BusinessEventService {
 
     @Property(name= PN_DEFAULT_SORT_ORDER, label = "Sort order", description = "Default sort order",  value = DEFAULT_SORT_ORDER,
             options = {
-                    @PropertyOption(value = "Ascending", name = "ASC"),
-                    @PropertyOption(value = "Descending", name = "DESC")
+                    @PropertyOption(value = "Ascending", name = "asc"),
+                    @PropertyOption(value = "Descending", name = "desc")
             })
     private static String defaultSortOrder;
 
@@ -92,14 +92,23 @@ public class BusinessEventServiceImpl implements BusinessEventService {
         // Search fulltext in current page and sub-paths
         logger.info("*** Find By Query Builder ***");
 
-        try {
-            BusinessEventBean.class.getField(sortField);
-        } catch(NoSuchFieldException e) {
+        if(sortField == null) {
             sortField = defaultSortField;
+        } else {
+
+            try {
+                BusinessEventBean.class.getField(sortField);
+            } catch (NoSuchFieldException e) {
+                sortField = defaultSortField;
+            }
         }
 
-        if(!("ASC".equals(sortOrder) || "DESC".equals(sortOrder))) {
+        if(sortOrder == null) {
             sortOrder = defaultSortOrder;
+        } else {
+            if (!("asc".equals(sortOrder) || "desc".equals(sortOrder))) {
+                sortOrder = defaultSortOrder;
+            }
         }
 
         if(pageSize <= 0) {
@@ -128,17 +137,11 @@ public class BusinessEventServiceImpl implements BusinessEventService {
             map.put("property", "sling:resourceType");
             map.put("property.value", "upshot/components/businessevent");
             // sorting
-            map.put("orderby", sortField);
+            map.put("orderby", "@" + sortField);
             map.put("orderby.sort", sortOrder);
             // can be done in map or with Query methods
             map.put("p.offset", "" + (pageNo * pageSize));
             map.put("p.limit", "" + pageSize);
-
-            logger.info("Created map:");
-            for(String key : map.keySet()) {
-                String value = map.get(key);
-                logger.info(key + "=" + value);
-            }
 
             Query query = queryBuilder.createQuery(PredicateGroup.create(map), session);
             SearchResult result = query.getResult();

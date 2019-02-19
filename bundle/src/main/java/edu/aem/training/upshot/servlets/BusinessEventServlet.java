@@ -49,17 +49,10 @@ public class BusinessEventServlet extends SlingSafeMethodsServlet {
         JSONObject json = (request.getParameter("title") != null && request.getParameter("title").length() > 0) ?
                     getEvent(request) : getAllEvents(request);
 
-        try {
-            String id = UUID.randomUUID().toString();
-            json.put("id", id);
-            // Get the JSON formatted data
-            String jsonData = json.toString();
-            // Return the json formatted data
-            response.getWriter().write(jsonData);
-
-        } catch(JSONException e) {
-            logger.info("ERROR: ", e.getMessage());
-        }
+        // Get the JSON formatted data
+        String jsonData = json.toString();
+        // Return the json formatted data
+        response.getWriter().write(jsonData);
     }
 
     private JSONObject getEvent(SlingHttpServletRequest request) throws ServletException, IOException {
