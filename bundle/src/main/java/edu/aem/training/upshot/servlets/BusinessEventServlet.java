@@ -8,6 +8,7 @@ import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.SlingHttpServletResponse;
 import org.apache.sling.api.servlets.SlingSafeMethodsServlet;
 import org.apache.sling.commons.json.JSONArray;
+import org.apache.sling.commons.json.JSONException;
 import org.apache.sling.commons.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,33 +29,39 @@ public class BusinessEventServlet extends SlingSafeMethodsServlet {
 
     protected void doGet(SlingHttpServletRequest request, SlingHttpServletResponse response) throws ServletException, IOException {
 
-        String json = (request.getParameter("title") != null && request.getParameter("title").length() > 0) ?
-                    getEventJson(request) : getAllEventsJson(request);
+        JSONObject json = (request.getParameter("id") != null && request.getParameter("id").length() > 0) ?
+                    getEvent(request) : getAllEvents(request);
 
+        // Get the JSON formatted data
+        String jsonData = json.toString();
         // Return the json formatted data
-        response.getWriter().write(json);
+        response.getWriter().write(jsonData);
     }
 
-    private String getEventJson(SlingHttpServletRequest request) throws ServletException, IOException {
+    private JSONObject getEvent(SlingHttpServletRequest request) throws ServletException, IOException {
 
-        String title = request.getParameter("title");
+        String id = request.getParameter("id");
 
-        BusinessEventBean event = eventService.getEvent(title);
+        BusinessEventBean event = eventService.getEvent(id);
 
-        String json = "";
+        JSONObject json = null;
 
         // Encode the submitted form data to JSON
         if(event != null) {
-            json = event.toJSONObject().toString();
+            json = event.toJSONObject();
+        } else {
+            json = new JSONObject();
         }
 
         return json;
     }
 
-    private String getAllEventsJson(SlingHttpServletRequest request) throws ServletException, IOException {
+    private JSONObject getAllEvents(SlingHttpServletRequest request) throws ServletException, IOException {
 
-        String sortField = request.getParameter("sortField");
-        String sortOrder = request.getParameter("sortOrder");
+        String sortField = (request.getParameter("sortField") != null) ?
+                request.getParameter("sortField") : request.getParameter("sorters[0][field]");
+        String sortOrder = (request.getParameter("sortOrder") != null) ?
+                request.getParameter("sortOrder") : request.getParameter("sorters[0][dir]");
         String pageSizeStr = request.getParameter("pageSize");
         String pageNoStr = request.getParameter("pageNo");
 
@@ -74,15 +81,27 @@ public class BusinessEventServlet extends SlingSafeMethodsServlet {
 
 
         List<BusinessEventBean> events = eventService.getAllEvents(sortField, sortOrder, pageSize, pageNo);
+        long totalEvents = eventService.getTotalEvents();
 
-        // Encode the submitted form data to JSON
-        JSONArray jsonEvents = new JSONArray();
-        for (BusinessEventBean event : events)
-        {
-            jsonEvents.put(event.toJSONObject());
+        JSONObject json = new JSONObject();
+        try {
+            // Encode the submitted form data to JSON
+            JSONArray jsonEvents = new JSONArray();
+            for (BusinessEventBean event : events)
+            {
+                jsonEvents.put(event.toJSONObject());
+            }
+
+            json.put("events", jsonEvents);
+            if(pageSize > 0) {
+                json.put("maxPages", 1 + Math.floor(totalEvents / pageSize));
+            }
+            json.put("totalEvents", totalEvents);
+        } catch (JSONException e) {
+            logger.info("ERROR: ", e.getMessage());
         }
 
-        return jsonEvents.toString();
+        return json;
     }
 
 }

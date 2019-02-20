@@ -23,7 +23,7 @@
                 place="dep 12"
                 title="Event 1"
                 topic="planning"/>
-            <businessevent
+            <businessevent_1_1
                     jcr:created="{Date}2019-02-18T16:35:11.395+03:00"
                     jcr:createdBy="admin"
                     jcr:lastModified="{Date}2019-02-18T16:36:08.385+03:00"
@@ -31,9 +31,9 @@
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="upshot/components/businessevent"
                     date="{Date}2019-02-19T16:35:54.000+03:00"
-                    description="Event ! Description"
+                    description="Event 1_1 ! Description"
                     place="New York"
-                    title="Event 1"
+                    title="Event 1_1"
                     topic="planning"/>
             <businessevent_1
                     jcr:created="{Date}2019-02-18T16:35:11.395+03:00"
@@ -43,7 +43,7 @@
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="upshot/components/businessevent"
                     date="{Date}2018-02-23T16:35:54.000+03:00"
-                    description="Event ! Description"
+                    description="Meet ! Description"
                     place="Moscow"
                     title="Meet"
                     topic="meeting"/>
@@ -55,7 +55,7 @@
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="upshot/components/businessevent"
                     date="{Date}2019-06-16T16:35:54.000+03:00"
-                    description="Event ! Description"
+                    description="Plan ! Description"
                     place="London"
                     title="Plan"
                     topic="planning"/>
@@ -67,7 +67,7 @@
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="upshot/components/businessevent"
                     date="{Date}2015-05-10T16:35:54.000+03:00"
-                    description="Event ! Description"
+                    description="Fight ! Description"
                     place="St. Petersburg"
                     title="Fight"
                     topic="fighting"/>
@@ -79,7 +79,7 @@
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="upshot/components/businessevent"
                     date="{Date}2019-08-12T16:35:54.000+03:00"
-                    description="Event ! Description"
+                    description="Meet ! Description"
                     place="Los Angeles"
                     title="Meet"
                     topic="meeting"/>
@@ -91,7 +91,7 @@
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="upshot/components/businessevent"
                     date="{Date}2019-06-11T16:35:54.000+03:00"
-                    description="Event ! Description"
+                    description="Speech ! Description"
                     place="Vladivostok"
                     title="Speech"
                     topic="meeting"/>
@@ -103,7 +103,7 @@
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="upshot/components/businessevent"
                     date="{Date}2019-03-08T16:35:54.000+03:00"
-                    description="Event ! Description"
+                    description="Minsk ! Description"
                     place="Minsk"
                     title="Dance"
                     topic="meeting"/>

@@ -6,7 +6,6 @@ import com.day.cq.search.QueryBuilder;
 import com.day.cq.search.result.Hit;
 import com.day.cq.search.result.SearchResult;
 import edu.aem.training.upshot.beans.BusinessEventBean;
-import edu.aem.training.upshot.beans.LinkBean;
 import edu.aem.training.upshot.services.BusinessEventService;
 import org.apache.felix.scr.annotations.*;
 import org.apache.sling.api.resource.ResourceResolver;
@@ -70,6 +69,8 @@ public class BusinessEventServiceImpl implements BusinessEventService {
     @Reference
     private QueryBuilder queryBuilder;
 
+    private long totalEvents;
+
     @Activate
     @Modified
     protected void onChangeProperties(ComponentContext context) {
@@ -88,6 +89,7 @@ public class BusinessEventServiceImpl implements BusinessEventService {
         }
     }
 
+
     public List<BusinessEventBean> getAllEvents(String sortField, String sortOrder, int pageSize, int pageNo) {
         // Search fulltext in current page and sub-paths
         logger.info("*** Find By Query Builder ***");
@@ -97,7 +99,7 @@ public class BusinessEventServiceImpl implements BusinessEventService {
         } else {
 
             try {
-                BusinessEventBean.class.getField(sortField);
+                BusinessEventBean.class.getDeclaredField(sortField);
             } catch (NoSuchFieldException e) {
                 sortField = defaultSortField;
             }
@@ -111,9 +113,10 @@ public class BusinessEventServiceImpl implements BusinessEventService {
             }
         }
 
-        if(pageNo < 0) {
-            pageNo = 0;
+        if(pageNo <= 0) {
+            pageNo = 1;
         }
+
 
         List<BusinessEventBean> events = new ArrayList<BusinessEventBean>();
 
@@ -134,7 +137,7 @@ public class BusinessEventServiceImpl implements BusinessEventService {
             map.put("orderby", "@" + sortField);
             map.put("orderby.sort", sortOrder);
             // can be done in map or with Query methods
-            map.put("p.offset", "" + (pageNo * pageSize));
+            map.put("p.offset", "" + ( (pageNo - 1) * pageSize));
             map.put("p.limit", "" + pageSize);
 
             Query query = queryBuilder.createQuery(PredicateGroup.create(map), session);
@@ -146,6 +149,9 @@ public class BusinessEventServiceImpl implements BusinessEventService {
                 BusinessEventBean event = extractEvent(node);
                 events.add(event);
             }
+
+            totalEvents = result.getTotalMatches();
+
             //close the session
             session.logout();
 
@@ -156,7 +162,7 @@ public class BusinessEventServiceImpl implements BusinessEventService {
         return events;
     }
 
-    public BusinessEventBean getEvent(String title) {
+    public BusinessEventBean getEvent(String id) {
 
         // Search fulltext in current page and sub-paths
         logger.info("*** Find By Query Builder ***");
@@ -174,17 +180,7 @@ public class BusinessEventServiceImpl implements BusinessEventService {
             // create query description as hash map
             Map<String, String> map = new HashMap<String, String>();
             map.put("path", defaultEventControlPanelUrl);
-            map.put("1_property", "sling:resourceType");
-            map.put("1_property.value", "upshot/components/businessevent");
-            map.put("2_property", "title");
-            map.put("2_property.value", title);
-            map.put("p.limit", "1");
-
-            logger.info("Created map:");
-            for(String key : map.keySet()) {
-                String value = map.get(key);
-                logger.info(key + "=" + value);
-            }
+            map.put("nodename", id);
 
             Query query = queryBuilder.createQuery(PredicateGroup.create(map), session);
             SearchResult result = query.getResult();
@@ -208,6 +204,7 @@ public class BusinessEventServiceImpl implements BusinessEventService {
 
         try {
             BusinessEventBean event = new BusinessEventBean();
+            event.setId(node.getName());
             event.setTitle(node.getProperty("title").getString());
             event.setDescription(node.getProperty("description").getString());
             event.setDate(node.getProperty("date").getDate().getTime());
@@ -219,5 +216,10 @@ public class BusinessEventServiceImpl implements BusinessEventService {
         }
 
         return null;
+    }
+
+
+    public long getTotalEvents() {
+        return totalEvents;
     }
 }

@@ -9,7 +9,9 @@ import java.util.List;
  */
 public interface BusinessEventService {
 
+    long getTotalEvents();
+
     List<BusinessEventBean> getAllEvents(String sortField, String sortOrder, int pageSize, int pageNo);
 
-    BusinessEventBean getEvent(String title);
+    BusinessEventBean getEvent(String id);
 }

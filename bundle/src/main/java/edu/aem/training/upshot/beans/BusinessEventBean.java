@@ -11,6 +11,7 @@ public class BusinessEventBean {
 
     Logger logger = LoggerFactory.getLogger(BusinessEventBean.class);
 
+    String id;
     String title;
     String description;
     Date date;
@@ -21,7 +22,8 @@ public class BusinessEventBean {
 
     }
 
-    public BusinessEventBean(String title, String description, Date date, String place, String topic) {
+    public BusinessEventBean(String id, String title, String description, Date date, String place, String topic) {
+        this.id = id;
         this.title = title;
         this.description = description;
         this.date = date;
@@ -69,12 +71,21 @@ public class BusinessEventBean {
         this.topic = topic;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public JSONObject toJSONObject() {
 
         JSONObject obj = null;
 
         try {
             obj = new JSONObject();
+            obj.put("id", id);
             obj.put("title", title);
             obj.put("description", description);
             obj.put("date", String.format("%td/%tm/%tY", date, date, date) );

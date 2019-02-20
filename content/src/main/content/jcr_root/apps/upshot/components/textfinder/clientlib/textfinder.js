@@ -51,6 +51,6 @@ $(document).ready(function() {
                 $('#json').html($('#queryEngine').val() + ":<br>" + list);
              }
          });
-      });
+    });
 
 }); // end ready
