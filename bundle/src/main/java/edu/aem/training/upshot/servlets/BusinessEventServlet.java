@@ -1,37 +1,19 @@
 package edu.aem.training.upshot.servlets;
 
-import com.day.cq.search.PredicateGroup;
-import com.day.cq.search.Query;
-import com.day.cq.search.QueryBuilder;
-import com.day.cq.search.result.Hit;
-import com.day.cq.search.result.SearchResult;
-import com.day.cq.wcm.api.PageManager;
 import edu.aem.training.upshot.beans.BusinessEventBean;
-import edu.aem.training.upshot.beans.LinkBean;
 import edu.aem.training.upshot.services.BusinessEventService;
 import org.apache.felix.scr.annotations.Reference;
 import org.apache.felix.scr.annotations.sling.SlingServlet;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.SlingHttpServletResponse;
-import org.apache.sling.api.resource.ResourceResolver;
-import org.apache.sling.api.resource.ResourceResolverFactory;
 import org.apache.sling.api.servlets.SlingSafeMethodsServlet;
 import org.apache.sling.commons.json.JSONArray;
-import org.apache.sling.commons.json.JSONException;
 import org.apache.sling.commons.json.JSONObject;
-import org.apache.sling.jcr.api.SlingRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.jcr.Node;
-import javax.jcr.NodeIterator;
-import javax.jcr.RepositoryException;
-import javax.jcr.Session;
-import javax.jcr.query.QueryManager;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.*;
 
 @SlingServlet(
@@ -46,34 +28,30 @@ public class BusinessEventServlet extends SlingSafeMethodsServlet {
 
     protected void doGet(SlingHttpServletRequest request, SlingHttpServletResponse response) throws ServletException, IOException {
 
-        JSONObject json = (request.getParameter("title") != null && request.getParameter("title").length() > 0) ?
-                    getEvent(request) : getAllEvents(request);
+        String json = (request.getParameter("title") != null && request.getParameter("title").length() > 0) ?
+                    getEventJson(request) : getAllEventsJson(request);
 
-        // Get the JSON formatted data
-        String jsonData = json.toString();
         // Return the json formatted data
-        response.getWriter().write(jsonData);
+        response.getWriter().write(json);
     }
 
-    private JSONObject getEvent(SlingHttpServletRequest request) throws ServletException, IOException {
+    private String getEventJson(SlingHttpServletRequest request) throws ServletException, IOException {
 
         String title = request.getParameter("title");
 
         BusinessEventBean event = eventService.getEvent(title);
 
-        JSONObject json = null;
+        String json = "";
 
         // Encode the submitted form data to JSON
         if(event != null) {
-            json = event.toJSONObject();
-        } else {
-            json = new JSONObject();
+            json = event.toJSONObject().toString();
         }
 
         return json;
     }
 
-    private JSONObject getAllEvents(SlingHttpServletRequest request) throws ServletException, IOException {
+    private String getAllEventsJson(SlingHttpServletRequest request) throws ServletException, IOException {
 
         String sortField = request.getParameter("sortField");
         String sortOrder = request.getParameter("sortOrder");
@@ -97,21 +75,14 @@ public class BusinessEventServlet extends SlingSafeMethodsServlet {
 
         List<BusinessEventBean> events = eventService.getAllEvents(sortField, sortOrder, pageSize, pageNo);
 
-        JSONObject json = new JSONObject();
-        try {
-            // Encode the submitted form data to JSON
-            JSONArray jsonEvents = new JSONArray();
-            for (BusinessEventBean event : events)
-            {
-                jsonEvents.put(event.toJSONObject());
-            }
-
-            json.put("events", jsonEvents);
-        } catch (JSONException e) {
-            logger.info("ERROR: ", e.getMessage());
+        // Encode the submitted form data to JSON
+        JSONArray jsonEvents = new JSONArray();
+        for (BusinessEventBean event : events)
+        {
+            jsonEvents.put(event.toJSONObject());
         }
 
-        return json;
+        return jsonEvents.toString();
     }
 
 }

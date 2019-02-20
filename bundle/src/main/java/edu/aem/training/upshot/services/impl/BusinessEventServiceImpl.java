@@ -111,15 +111,9 @@ public class BusinessEventServiceImpl implements BusinessEventService {
             }
         }
 
-        if(pageSize <= 0) {
-            pageSize = defaultPageSize;
-        }
-
         if(pageNo < 0) {
             pageNo = 0;
         }
-
-
 
         List<BusinessEventBean> events = new ArrayList<BusinessEventBean>();
 

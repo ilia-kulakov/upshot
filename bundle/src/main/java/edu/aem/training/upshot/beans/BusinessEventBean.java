@@ -4,7 +4,7 @@ import org.apache.sling.commons.json.JSONException;
 import org.apache.sling.commons.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import java.util.Calendar;
 import java.util.Date;
 
 public class BusinessEventBean {
@@ -77,7 +77,7 @@ public class BusinessEventBean {
             obj = new JSONObject();
             obj.put("title", title);
             obj.put("description", description);
-            obj.put("date", date);
+            obj.put("date", String.format("%td/%tm/%tY", date, date, date) );
             obj.put("place", place);
             obj.put("topic", topic);
         } catch(JSONException e) {

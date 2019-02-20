@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
           jcr:primaryType="nt:unstructured"
-          jcr:title="Text Finder Component"
-          sling:resourceType="cq/gui/components/authoring/dialog"
-          helpPath="http://www.adobe.com/go/aem6_1_docs_component_en#Image - Sightly">
+          jcr:title="Business Event Table Component"
+          sling:resourceType="cq/gui/components/authoring/dialog">
     <content
             jcr:primaryType="nt:unstructured"
             sling:resourceType="granite/ui/components/foundation/container">
@@ -25,28 +24,13 @@
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="granite/ui/components/foundation/container">
                         <items jcr:primaryType="nt:unstructured">
-                            <query-engine
+                            <provider
                                     jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/foundation/form/select"
-                                    fieldLabel="Query engine"
-                                    fieldDescription="Please select query engine"
-                                    activeItem="1"
-                                    name="./queryEngine">
-                                <items jcr:primaryType="nt:unstructured">
-                                    <xpath
-                                            jcr:primaryType="nt:unstructured"
-                                            text="XPath"
-                                            value="xpath"/>
-                                    <sql2
-                                            jcr:primaryType="nt:unstructured"
-                                            text="SQL2"
-                                            value="sql2"/>
-                                    <predicates
-                                            jcr:primaryType="nt:unstructured"
-                                            text="Predicates"
-                                            value="predicates"/>
-                                </items>
-                            </query-engine>
+                                    sling:resourceType="granite/ui/components/foundation/form/textfield"
+                                    fieldLabel="Data provider's URL"
+                                    value="/bin/upshot/servlets/BusinessEventServlet"
+                                    allowBlank="false"
+                                    name="./provider"/>
                         </items>
                     </column>
                 </items>

@@ -1,0 +1,12 @@
+<sly data-sly-use.clientlib="/libs/granite/sightly/templates/clientlib.html" />
+<sly data-sly-call="${clientlib.css @ categories='upshot.components.business-event-table'}" />
+<sly data-sly-call="${clientlib.js @ categories='upshot.components.business-event-table'}" />
+
+<h1>Business Event Table</h1>
+<sly data-sly-test="${properties['provider']}">
+    <input hidden id="business-event-table-provider" type="text" value="${properties['provider']}">
+</sly>
+<sly data-sly-test="${!properties['provider']}">
+    <input hidden id="business-event-table-provider" type="text" value="/bin/upshot/servlets/BusinessEventServlet">
+</sly>
+<div id="business-event-table"></div>
