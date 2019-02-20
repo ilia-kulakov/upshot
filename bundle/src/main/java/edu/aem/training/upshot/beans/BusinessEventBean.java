@@ -4,19 +4,18 @@ import org.apache.sling.commons.json.JSONException;
 import org.apache.sling.commons.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.util.Calendar;
 import java.util.Date;
 
 public class BusinessEventBean {
 
     Logger logger = LoggerFactory.getLogger(BusinessEventBean.class);
 
-    String id;
-    String title;
-    String description;
+    String id = "";
+    String title = "";
+    String description = "";
     Date date;
-    String place;
-    String topic;
+    String place = "";
+    String topic = "";
 
     public BusinessEventBean() {
 

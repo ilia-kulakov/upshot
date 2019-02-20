@@ -205,11 +205,16 @@ public class BusinessEventServiceImpl implements BusinessEventService {
         try {
             BusinessEventBean event = new BusinessEventBean();
             event.setId(node.getName());
-            event.setTitle(node.getProperty("title").getString());
-            event.setDescription(node.getProperty("description").getString());
-            event.setDate(node.getProperty("date").getDate().getTime());
-            event.setPlace(node.getProperty("place").getString());
-            event.setTopic(node.getProperty("topic").getString());
+            if(node.hasProperty("title"))
+                event.setTitle(node.getProperty("title").getString());
+            if(node.hasProperty("description"))
+                event.setDescription(node.getProperty("description").getString());
+            if(node.hasProperty("date"))
+                event.setDate(node.getProperty("date").getDate().getTime());
+            if(node.hasProperty("place"))
+                event.setPlace(node.getProperty("place").getString());
+            if(node.hasProperty("topic"))
+                event.setTopic(node.getProperty("topic").getString());
             return event;
         } catch(RepositoryException e) {
             logger.info("ERROR:" + e.getMessage());
