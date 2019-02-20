@@ -3,11 +3,40 @@
 <sly data-sly-call="${clientlib.js @ categories='upshot.components.business-event-table'}" />
 
 <h1>Business Event Table</h1>
+<!-- URL of  the business event data provider -->
 <sly data-sly-test="${properties['provider']}">
     <input hidden id="business-event-table-provider" type="text" value="${properties['provider']}">
 </sly>
 <sly data-sly-test="${!properties['provider']}">
     <input hidden id="business-event-table-provider" type="text" value="/bin/upshot/servlets/BusinessEventServlet">
 </sly>
+<!-- Business Event Table -->
 <div id="business-event-table"></div>
 <div><input type="button" value="Refresh" id="business-event-table-refresh"></div>
+
+<!-- Modal popup window with event details -->
+<div hidden id="business-event-details" title="Event details">
+    <h3 hidden id="business-event-details-wait">Loading, wait please...</h3>
+    <table id="business-event-details-table" style="text-align: left;">
+        <tr>
+            <td style="font-weight: bold;">Title</td>
+            <td id="business-event-title">loading...</td>
+        </tr>
+        <tr>
+            <td style="font-weight: bold;">Descrition</td>
+            <td id="business-event-description">loading...</td>
+        </tr>
+        <tr>
+            <td style="font-weight: bold;">Date</td>
+            <td id="business-event-date">loading...</td>
+        </tr>
+        <tr>
+            <td style="font-weight: bold;">Place</td>
+            <td id="business-event-place">loading...</td>
+        </tr>
+        <tr>
+            <td style="font-weight: bold;">Topic</td>
+            <td id="business-event-topic">loading...</td>
+        </tr>
+    </table>
+</div>

@@ -1,3 +1,5 @@
 tabulator.min.js
 moment.js
+jquery-1.8.3.js
+jquery-ui-1.9.2.custom.min.js
 business-event-table.js

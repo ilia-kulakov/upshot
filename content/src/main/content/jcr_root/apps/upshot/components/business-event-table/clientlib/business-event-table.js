@@ -32,8 +32,46 @@ $(document).ready(function() {
             {title:"Topic", field:"topic", sorter:"string"},
         ],
         rowClick:function(e, row){ //trigger an alert message when the row is clicked
-         		alert("Row ID: " + row.getData().id + " Title: " + row.getData().title + " Clicked!!!!");
-         	},
+            // Request event data by id
+
+            // Show "Wait message"
+            $('#business-event-details-wait').show();
+            // Hide event info
+            $('#business-event-details-table').hide();
+
+            // Show event view
+            $( "#business-event-details" ).dialog({
+              modal: true,
+              buttons: {
+                Ok: function() {
+                  $( this ).dialog( "close" );
+                }
+              }
+            });
+
+            // Ask event data by id
+            // Use JQuery AJAX request to post data to a Sling Servlet
+            $.ajax({
+                 type: 'GET',
+                 url: providerUrl,
+                 data:'id=' + row.getData().id,
+                 success: function(msg){
+
+                    var event = jQuery.parseJSON(msg);
+
+                    $('#business-event-title').html(event.title);
+                    $('#business-event-description').html(event.description);
+                    $('#business-event-date').html(event.date);
+                    $('#business-event-place').html(event.place);
+                    $('#business-event-topic').html(event.topic);
+
+                    // Hide "Wait message"
+                    $('#business-event-details-wait').hide();
+                    // Show event info
+                    $('#business-event-details-table').show();
+                 }
+             });
+        },
     });
 
     $('#business-event-table-refresh').click(function() {
