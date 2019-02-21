@@ -17,7 +17,7 @@ $(document).ready(function() {
                 "last_page":"maxPages", //change last_page parameter name to "maxPages"
                 "data":"events",
             } ,
-        paginationSize:3,
+        paginationSize:6,
         paginationSizeSelector:[3, 4, 5, 6, 7, 8, 9, 10, 15, 20],
 
         ajaxSorting:true, //send sort data to the server instead of processing locally

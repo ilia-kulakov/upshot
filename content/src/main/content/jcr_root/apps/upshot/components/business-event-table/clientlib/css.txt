@@ -1,2 +1,1 @@
-tabulator.min.css
-jquery-ui-1.9.2.custom.min.css
+css/tabulator.min.css

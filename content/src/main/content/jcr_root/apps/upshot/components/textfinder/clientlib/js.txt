@@ -1,1 +1,1 @@
-textfinder.js
+js/textfinder.js
