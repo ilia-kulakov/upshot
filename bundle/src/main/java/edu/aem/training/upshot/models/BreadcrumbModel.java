@@ -4,21 +4,17 @@ import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
 import com.day.cq.wcm.api.designer.Designer;
 import com.day.cq.wcm.api.designer.Style;
-import com.day.cq.wcm.foundation.Image;
-import com.day.cq.wcm.foundation.Placeholder;
 import edu.aem.training.upshot.beans.LinkBean;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.DefaultInjectionStrategy;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.Self;
-import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
-import javax.inject.Inject;
-import javax.jcr.Node;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,13 +63,13 @@ public class BreadcrumbModel {
             }
 
             String title = trail.getNavigationTitle();
-            if (title == null || title.equals("")) {
+            if (StringUtils.isBlank(title)) {
                 title = trail.getNavigationTitle();
             }
-            if (title == null || title.equals("")) {
+            if (StringUtils.isBlank(title)) {
                 title = trail.getTitle();
             }
-            if (title == null || title.equals("")) {
+            if (StringUtils.isBlank(title)) {
                 title = trail.getName();
             }
 

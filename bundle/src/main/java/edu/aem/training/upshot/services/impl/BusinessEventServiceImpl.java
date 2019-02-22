@@ -8,12 +8,14 @@ import com.day.cq.search.result.SearchResult;
 import edu.aem.training.upshot.beans.BusinessEventBean;
 import edu.aem.training.upshot.services.BusinessEventService;
 import org.apache.felix.scr.annotations.*;
+import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.resource.ResourceResolverFactory;
 import org.apache.sling.commons.osgi.PropertiesUtil;
 import org.osgi.service.component.ComponentContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.apache.sling.jcr.api.SlingRepository;
 
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
@@ -30,15 +32,21 @@ public class BusinessEventServiceImpl implements BusinessEventService {
 
     Logger logger = LoggerFactory.getLogger(BusinessEventService.class);
 
-    public static final String PN_DEFAULT_SORT_FIELD = "aem.training.upshot.business_event.default_sort_field";
-    public static final String PN_DEFAULT_SORT_ORDER = "aem.training.upshot.business_event.default_sort_order";
-    public static final String PN_DEFAULT_PAGE_SIZE = "aem.training.upshot.business_event.default_page_size";
-    public static final String PN_DEFAULT_EVENT_CONTROL_PANEL_URL = "aem.training.upshot.business_event.default_event_control_panel_url";
+    private static final String PROPERTY_TITLE = "title";
+    private static final String PROPERTY_DESCRIPTION = "description";
+    private static final String PROPERTY_DATE = "date";
+    private static final String PROPERTY_PLACE = "place";
+    private static final String PROPERTY_TOPIC = "topic";
 
-    public static final String DEFAULT_SORT_FIELD = "Title";
-    public static final String DEFAULT_SORT_ORDER = "asc";
-    public static final int DEFAULT_PAGE_SIZE = 10;
-    public static final String DEFAULT_EVENT_CONTROL_PANEL_URL ="/etc/training-site/event-control-panel";
+    private static final String PN_DEFAULT_SORT_FIELD = "aem.training.upshot.business_event.default_sort_field";
+    private static final String PN_DEFAULT_SORT_ORDER = "aem.training.upshot.business_event.default_sort_order";
+    private static final String PN_DEFAULT_PAGE_SIZE = "aem.training.upshot.business_event.default_page_size";
+    private static final String PN_DEFAULT_EVENT_CONTROL_PANEL_URL = "aem.training.upshot.business_event.default_event_control_panel_url";
+
+    private static final String DEFAULT_SORT_FIELD = "title";
+    private static final String DEFAULT_SORT_ORDER = "asc";
+    private static final int    DEFAULT_PAGE_SIZE = 10;
+    private static final String DEFAULT_EVENT_CONTROL_PANEL_URL ="/etc/training-site/event-control-panel";
 
     @Property(name= PN_DEFAULT_SORT_FIELD, label = "Sort field", description = "Default sort field",  value = DEFAULT_SORT_FIELD,
             options = {
@@ -64,9 +72,6 @@ public class BusinessEventServiceImpl implements BusinessEventService {
     private static String defaultEventControlPanelUrl;
 
     @Reference
-    private ResourceResolverFactory resolverFactory;
-
-    @Reference
     private QueryBuilder queryBuilder;
 
     private long totalEvents;
@@ -90,7 +95,7 @@ public class BusinessEventServiceImpl implements BusinessEventService {
     }
 
 
-    public List<BusinessEventBean> getAllEvents(String sortField, String sortOrder, int pageSize, int pageNo) {
+    public List<BusinessEventBean> getAllEvents(SlingHttpServletRequest request, String sortField, String sortOrder, int pageSize, int pageNo) {
         // Search fulltext in current page and sub-paths
         logger.info("*** Find By Query Builder ***");
 
@@ -122,10 +127,10 @@ public class BusinessEventServiceImpl implements BusinessEventService {
 
         try
         {
-            logger.info("Getting Ready to create SESSION!!");
+            logger.info("Getting Ready to get user SESSION!!");
 
-            //Invoke the adaptTo method to create a Session
-            ResourceResolver resourceResolver = resolverFactory.getAdministrativeResourceResolver(null);
+            //Invoke the adaptTo method to get user Session
+            ResourceResolver resourceResolver = request.getResourceResolver();
             Session session = resourceResolver.adaptTo(Session.class);
 
             // create query description as hash map
@@ -152,9 +157,6 @@ public class BusinessEventServiceImpl implements BusinessEventService {
 
             totalEvents = result.getTotalMatches();
 
-            //close the session
-            session.logout();
-
         } catch(Exception e) {
             this.logger.info("Something went wrong with session .. {}", e);
         }
@@ -162,7 +164,7 @@ public class BusinessEventServiceImpl implements BusinessEventService {
         return events;
     }
 
-    public BusinessEventBean getEvent(String id) {
+    public BusinessEventBean getEvent(SlingHttpServletRequest request, String id) {
 
         // Search fulltext in current page and sub-paths
         logger.info("*** Find By Query Builder ***");
@@ -171,10 +173,10 @@ public class BusinessEventServiceImpl implements BusinessEventService {
 
         try
         {
-            logger.info("Getting Ready to create SESSION!!");
+            logger.info("Getting Ready to get user SESSION!!");
 
-            //Invoke the adaptTo method to create a Session
-            ResourceResolver resourceResolver = resolverFactory.getAdministrativeResourceResolver(null);
+            //Invoke the adaptTo method to get user Session
+            ResourceResolver resourceResolver = request.getResourceResolver();
             Session session = resourceResolver.adaptTo(Session.class);
 
             // create query description as hash map
@@ -190,8 +192,6 @@ public class BusinessEventServiceImpl implements BusinessEventService {
                 Node node = result.getHits().get(0).getNode();
                 event = extractEvent(node);
             }
-            //close the session
-            session.logout();
 
         } catch(Exception e) {
             this.logger.info("Something went wrong with session .. {}", e);
@@ -205,16 +205,16 @@ public class BusinessEventServiceImpl implements BusinessEventService {
         try {
             BusinessEventBean event = new BusinessEventBean();
             event.setId(node.getName());
-            if(node.hasProperty("title"))
-                event.setTitle(node.getProperty("title").getString());
-            if(node.hasProperty("description"))
-                event.setDescription(node.getProperty("description").getString());
-            if(node.hasProperty("date"))
-                event.setDate(node.getProperty("date").getDate().getTime());
-            if(node.hasProperty("place"))
-                event.setPlace(node.getProperty("place").getString());
-            if(node.hasProperty("topic"))
-                event.setTopic(node.getProperty("topic").getString());
+            if(node.hasProperty(PROPERTY_TITLE))
+                event.setTitle(node.getProperty(PROPERTY_TITLE).getString());
+            if(node.hasProperty(PROPERTY_DESCRIPTION))
+                event.setDescription(node.getProperty(PROPERTY_DESCRIPTION).getString());
+            if(node.hasProperty(PROPERTY_DATE))
+                event.setDate(node.getProperty(PROPERTY_DATE).getDate().getTime());
+            if(node.hasProperty(PROPERTY_PLACE))
+                event.setPlace(node.getProperty(PROPERTY_PLACE).getString());
+            if(node.hasProperty(PROPERTY_TOPIC))
+                event.setTopic(node.getProperty(PROPERTY_TOPIC).getString());
             return event;
         } catch(RepositoryException e) {
             logger.info("ERROR:" + e.getMessage());

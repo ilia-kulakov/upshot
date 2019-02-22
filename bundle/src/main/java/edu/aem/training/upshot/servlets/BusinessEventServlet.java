@@ -24,13 +24,27 @@ public class BusinessEventServlet extends SlingSafeMethodsServlet {
 
     Logger logger = LoggerFactory.getLogger(BusinessEventServlet.class);
 
+    private static final String PARAM_ID = "id";
+    private static final String PARAM_SORT_FIELD = "sortField";
+    private static final String PARAM_SORT_ORDER = "sortOrder";
+    private static final String PARAM_TABULATOR_SORT_FIELD = "sorters[0][field]";
+    private static final String PARAM_TABULATOR_SORT_ORDER = "sorters[0][dir]";
+    private static final String PARAM_PAGE_SIZE = "pageSize";
+    private static final String PARAM_PAGE_NO = "pageNo";
+
+    private static final String JSON_PARAM_EVENTS = "events";
+    private static final String JSON_PARAM_MAX_PAGES = "maxPages";
+    private static final String JSON_PARAM_TOTAL_EVENTS = "totalEvents";
+
     @Reference
     BusinessEventService eventService;
 
     protected void doGet(SlingHttpServletRequest request, SlingHttpServletResponse response) throws ServletException, IOException {
 
-        JSONObject json = (request.getParameter("id") != null && request.getParameter("id").length() > 0) ?
+        JSONObject json = (request.getParameter(PARAM_ID) != null && request.getParameter(PARAM_ID).length() > 0) ?
                     getEvent(request) : getAllEvents(request);
+
+
 
         // Get the JSON formatted data
         String jsonData = json.toString();
@@ -40,9 +54,9 @@ public class BusinessEventServlet extends SlingSafeMethodsServlet {
 
     private JSONObject getEvent(SlingHttpServletRequest request) throws ServletException, IOException {
 
-        String id = request.getParameter("id");
+        String id = request.getParameter(PARAM_ID);
 
-        BusinessEventBean event = eventService.getEvent(id);
+        BusinessEventBean event = eventService.getEvent(request, id);
 
         JSONObject json = null;
 
@@ -58,12 +72,12 @@ public class BusinessEventServlet extends SlingSafeMethodsServlet {
 
     private JSONObject getAllEvents(SlingHttpServletRequest request) throws ServletException, IOException {
 
-        String sortField = (request.getParameter("sortField") != null) ?
-                request.getParameter("sortField") : request.getParameter("sorters[0][field]");
-        String sortOrder = (request.getParameter("sortOrder") != null) ?
-                request.getParameter("sortOrder") : request.getParameter("sorters[0][dir]");
-        String pageSizeStr = request.getParameter("pageSize");
-        String pageNoStr = request.getParameter("pageNo");
+        String sortField = (request.getParameter(PARAM_SORT_FIELD) != null) ?
+                request.getParameter(PARAM_SORT_FIELD) : request.getParameter(PARAM_TABULATOR_SORT_FIELD);
+        String sortOrder = (request.getParameter(PARAM_SORT_ORDER) != null) ?
+                request.getParameter(PARAM_SORT_ORDER) : request.getParameter(PARAM_TABULATOR_SORT_ORDER);
+        String pageSizeStr = request.getParameter(PARAM_PAGE_SIZE);
+        String pageNoStr = request.getParameter(PARAM_PAGE_NO);
 
         int pageSize, pageNo;
 
@@ -80,7 +94,7 @@ public class BusinessEventServlet extends SlingSafeMethodsServlet {
         }
 
 
-        List<BusinessEventBean> events = eventService.getAllEvents(sortField, sortOrder, pageSize, pageNo);
+        List<BusinessEventBean> events = eventService.getAllEvents(request, sortField, sortOrder, pageSize, pageNo);
         long totalEvents = eventService.getTotalEvents();
 
         JSONObject json = new JSONObject();
@@ -92,11 +106,11 @@ public class BusinessEventServlet extends SlingSafeMethodsServlet {
                 jsonEvents.put(event.toJSONObject());
             }
 
-            json.put("events", jsonEvents);
+            json.put(JSON_PARAM_EVENTS, jsonEvents);
             if(pageSize > 0) {
-                json.put("maxPages", 1 + Math.floor(totalEvents / pageSize));
+                json.put(JSON_PARAM_MAX_PAGES, 1 + Math.floor(totalEvents / pageSize));
             }
-            json.put("totalEvents", totalEvents);
+            json.put(JSON_PARAM_TOTAL_EVENTS, totalEvents);
         } catch (JSONException e) {
             logger.info("ERROR: ", e.getMessage());
         }

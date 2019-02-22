@@ -18,6 +18,11 @@
     <artifactId>upshot-content</artifactId>
     <packaging>content-package</packaging>
     <name>Upshot of training: AEM 6.1 Package</name>
+    <!--<properties>-->
+        <!--<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>-->
+        <!--<maven.compiler.source>1.8</maven.compiler.source>-->
+        <!--<maven.compiler.target>1.8</maven.compiler.target>-->
+    <!--</properties>-->
 
     <dependencies>
         <dependency>

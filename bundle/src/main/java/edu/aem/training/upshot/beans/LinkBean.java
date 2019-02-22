@@ -9,9 +9,9 @@ public class LinkBean {
 
     Logger logger = LoggerFactory.getLogger(LinkBean.class);
 
-    private String title;
+    private String title = "";
 
-    private String url;
+    private String url = "";
 
     public LinkBean() {
     }
